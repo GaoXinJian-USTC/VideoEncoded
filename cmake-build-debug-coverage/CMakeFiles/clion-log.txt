@@ -1,0 +1,9 @@
+"D:\CLion 2020.2.5\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage -G "CodeBlocks - MinGW Makefiles" D:\projects\audio_encode
+-- OpenCV ARCH: x64
+-- OpenCV RUNTIME: mingw
+-- OpenCV STATIC: OFF
+-- Found OpenCV 4.5.1 in D:/opencv/opencv/build/mingw64_build/install/x64/mingw/lib
+-- You might need to add D:/opencv/opencv/build/mingw64_build/install/x64/mingw/bin to your PATH to be able to run your applications.
+-- Configuring done
+-- Generating done
+-- Build files have been written to: D:/projects/audio_encode/cmake-build-debug-coverage

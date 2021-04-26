@@ -1,0 +1,3 @@
+"D:\CLion 2020.2.5\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\auido_encode.dir/objects.a
+C:\mingw-w64\mingw64\bin\ar.exe cr CMakeFiles\auido_encode.dir/objects.a @CMakeFiles\auido_encode.dir\objects1.rsp
+C:\mingw-w64\mingw64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\auido_encode.dir/objects.a -Wl,--no-whole-archive  -o auido_encode.exe -Wl,--out-implib,libauido_encode.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\auido_encode.dir\linklibs.rsp

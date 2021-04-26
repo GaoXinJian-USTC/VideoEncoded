@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.17)
+project(h265rtsp)
+set(CMAKE_CXX_STANDARD 14)
+
+#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+set(OpenCV_DIR "D:\\opencv\\opencv\\build\\mingw64_build\\install")
+find_package(OpenCV REQUIRED)
+#include_directories(${OpenCV_INCLUDE_DIRS})
+include_directories(D:\\ffmpeg-4.3.2-2021-02-27-full_build-shared\\ffmpeg-4.3.2-2021-02-27-full_build-shared\\include)
+#include_directories(D:\\opencv\\opencv\\build\\mingw64_build\\install\\include)
+link_directories(D:\\ffmpeg-4.3.2-2021-02-27-full_build-shared\\ffmpeg-4.3.2-2021-02-27-full_build-shared\\lib)
+link_directories(D:\\opencv\\opencv\\build\\mingw64_build\\install\\x64\\mingw\\lib)
+add_executable(h265rtsp tuiliu_update.cpp)
+set(OpenCV_LIBS opencv_core opencv_imgproc opencv_highgui opencv_imgcodecs)
+target_link_libraries(h265rtsp avfilter avformat avcodec swscale avdevice avutil swresample )
+target_link_libraries(h265rtsp ${OpenCV_LIBS})
+

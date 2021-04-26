@@ -1,0 +1,3 @@
+"D:\CLion 2020.2.5\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\audio_encode.dir/objects.a
+C:\mingw-w64\mingw64\bin\ar.exe cr CMakeFiles\audio_encode.dir/objects.a @CMakeFiles\audio_encode.dir\objects1.rsp
+C:\mingw-w64\mingw64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\audio_encode.dir/objects.a -Wl,--no-whole-archive  -o audio_encode.exe -Wl,--out-implib,libaudio_encode.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\audio_encode.dir\linklibs.rsp

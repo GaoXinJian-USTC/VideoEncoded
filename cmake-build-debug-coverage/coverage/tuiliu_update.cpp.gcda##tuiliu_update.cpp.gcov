@@ -1,0 +1,462 @@
+        -:    0:Source:D:/projects/audio_encode/tuiliu_update.cpp
+        -:    0:Graph:D:\projects\audio_encode\cmake-build-debug-coverage\CMakeFiles\wav_encode.dir\tuiliu_update.cpp.gcno
+        -:    0:Data:D:\projects\audio_encode\cmake-build-debug-coverage\CMakeFiles\wav_encode.dir\tuiliu_update.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://
+        -:    2:// Created by dell on 2021/4/11.
+        -:    3://
+        -:    4:
+        -:    5:extern "C"
+        -:    6:{
+        -:    7:#include "libavformat/avformat.h"
+        -:    8:#include "libavutil/time.h"
+        -:    9:#include <libavutil/opt.h>
+        -:   10:}
+        -:   11:#include <iostream>
+        -:   12:using namespace std;
+        -:   13:#pragma comment(lib,"avformat.lib")
+        -:   14:#pragma comment(lib,"avutil.lib")
+        -:   15:#pragma comment(lib,"avcodec.lib")
+        -:   16:
+function _Z6XErrori called 1 returned 0% blocks executed 71%
+        1:   17:int XError(int errNum)
+        -:   18:{
+        1:   19:    char buf[1024] = { 0 };
+        1:   20:    av_strerror(errNum, buf, sizeof(buf));
+        1:   20-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   21:    cout << buf << endl;
+        1:   21-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   21-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   22:    getchar();
+        1:   22-block  0
+call    0 returned 0
+branch  1 taken 0 (fallthrough)
+branch  2 taken 0 (throw)
+    #####:   23:    return -1;
+    %%%%%:   23-block  0
+    %%%%%:   23-block  1
+        -:   24:}
+function _ZL3r2d10AVRational called 0 returned 0% blocks executed 0%
+    #####:   25:static double r2d(AVRational r)
+        -:   26:{
+    #####:   27:    return r.num == 0 || r.den == 0 ? 0. : (double)r.num / (double)r.den;
+    %%%%%:   27-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   27-block  1
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   27-block  2
+    %%%%%:   27-block  3
+    %%%%%:   27-block  4
+        -:   28:}
+        -:   29:
+function main called 1 returned 0% blocks executed 6%
+        1:   30:int main(int argc, char *argv[])
+        -:   31:{
+        -:   32:
+        1:   33:    const char *inUrl = "h265.mkv";
+        1:   34:    const char *outUrl = "rtp://localhost/live";
+        1:   35:    int frame_index = 0;
+        -:   36://    const char *outUrl = "rtmp://localhost/live";
+        -:   37:
+        -:   38:    //初始化所有封装和解封装 flv mp4 mov mp3
+        -:   39:    //av_register_all();
+        -:   40:
+        -:   41:    //初始化网络库
+        1:   42:    avformat_network_init();
+        1:   42-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        -:   43:
+        -:   44:    //
+        -:   45:    //输入流 1 打开文件，解封装
+        -:   46:    //输入封装上下文
+        1:   47:    AVFormatContext *ictx = NULL;
+        -:   48:
+        -:   49:    //打开文件，解封文件头
+        1:   50:    int re = avformat_open_input(&ictx, inUrl, 0, 0);//
+        1:   50-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   51:    if (re != 0)
+        1:   51-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        -:   52:    {
+       1*:   53:        return XError(re);
+        1:   53-block  0
+call    0 returned 0
+branch  1 taken 0 (fallthrough)
+branch  2 taken 0 (throw)
+    %%%%%:   53-block  1
+        -:   54:    }
+    #####:   55:    cout << "open file " << inUrl << " Success." << endl;
+    %%%%%:   55-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:   55-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:   55-block  2
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%:   55-block  3
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+        -:   56:
+        -:   57:    //获取音频视频流信息 ,h264 flv
+    #####:   58:    re = avformat_find_stream_info(ictx, 0);
+    %%%%%:   58-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   59:    if (re != 0)
+    %%%%%:   59-block  0
+branch  0 never executed
+branch  1 never executed
+        -:   60:    {
+    #####:   61:        return XError(re);
+    %%%%%:   61-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:   61-block  1
+        -:   62:    }
+    #####:   63:    av_dump_format(ictx, 0, inUrl, 0);
+    %%%%%:   63-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   64:    //
+        -:   65:
+        -:   66:
+        -:   67:    //
+        -:   68:    //输出流
+        -:   69:
+        -:   70:    //创建输出流上下文
+    #####:   71:    AVFormatContext *octx = NULL;
+    #####:   72:    re = avformat_alloc_output_context2(&octx, NULL, "rtsp", outUrl);
+    %%%%%:   72-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   73:    av_opt_set(octx->priv_data, "rtsp_transport", "tcp", 0);
+    %%%%%:   73-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   74:    //octx->max_interleave_delta = 1000000;
+        -:   75://    re = avformat_alloc_output_context2(&octx, 0, "flv", outUrl);
+    #####:   76:    if (!octx)
+    %%%%%:   76-block  0
+branch  0 never executed
+branch  1 never executed
+        -:   77:    {
+    #####:   78:        return XError(re);
+    %%%%%:   78-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:   78-block  1
+        -:   79:    }
+    #####:   80:    cout << "octx create success!" << endl;
+    %%%%%:   80-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:   80-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:   81:
+        -:   82:    //配置输出流
+        -:   83:    //遍历输入的AVStream
+    #####:   84:    for (int i = 0; i < ictx->nb_streams; i++)
+    %%%%%:   84-block  0
+    %%%%%:   84-block  1
+branch  0 never executed
+branch  1 never executed
+        -:   85:    {
+        -:   86:        //创建输出流
+    #####:   87:        AVCodec *codec = avcodec_find_decoder(ictx->streams[i]->codecpar->codec_id);
+    %%%%%:   87-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   88:        AVStream *out = avformat_new_stream(octx, codec);
+    %%%%%:   88-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   89:
+        -:   90:        //AVStream *out = avformat_new_stream(octx, );
+    #####:   91:        if (!out)
+    %%%%%:   91-block  0
+branch  0 never executed
+branch  1 never executed
+        -:   92:        {
+    #####:   93:            return XError(0);
+    %%%%%:   93-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:   93-block  1
+        -:   94:        }
+        -:   95:        //复制配置信息,同于MP4
+        -:   96:        //re = avcodec_copy_context(out->codec, ictx->streams[i]->codec);
+    #####:   97:        re = avcodec_parameters_copy(out->codecpar, ictx->streams[i]->codecpar);
+    %%%%%:   97-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:   97-block  1
+        -:   98:        //out->codec->codec_tag = 0;
+        -:   99:    }
+    #####:  100:    av_dump_format(octx, 0, outUrl, 1);
+    %%%%%:  100-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  101:    //
+        -:  102:
+        -:  103:    //rtmp推流
+        -:  104:
+        -:  105:    //打开io
+    #####:  106:    re = avio_open(&octx->pb, outUrl, AVIO_FLAG_WRITE);
+    %%%%%:  106-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  107:    if (!octx->pb)
+    %%%%%:  107-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  108:    {
+    #####:  109:        return XError(re);
+    %%%%%:  109-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  109-block  1
+        -:  110:    }
+        -:  111:
+        -:  112:    //写入头信息
+        -:  113:    //av_opt_set(octx->priv_data, "rtsp_transport", "tcp", 0);
+    #####:  114:    re = avformat_write_header(octx, 0);
+    %%%%%:  114-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  115:    cout<<re<<endl;
+    %%%%%:  115-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  115-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  116:    if (re < 0)
+    %%%%%:  116-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  117:    {
+    #####:  118:        return XError(re);
+    %%%%%:  118-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  118-block  1
+        -:  119:    }
+    #####:  120:    cout << "avformat_write_header " << re << endl;
+    %%%%%:  120-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  120-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:  120-block  2
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+        -:  121:    AVPacket pkt;
+    #####:  122:    long long startTime = av_gettime();
+    %%%%%:  122-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  122-block  1
+        -:  123:    for (;;)
+        -:  124:    {
+    #####:  125:        re = av_read_frame(ictx, &pkt);
+    %%%%%:  125-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  126:        if (re != 0)
+    %%%%%:  126-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  127:        {
+    #####:  128:            cout<<"re status:"<<re<<endl;
+    %%%%%:  128-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  128-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:  128-block  2
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+    #####:  129:            break;
+        -:  130:        }
+    #####:  131:        cout << pkt.pts << " " << flush;
+    %%%%%:  131-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  131-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:  131-block  2
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+        -:  132:        //计算转换pts dts
+        -:  133:        /*
+        -:  134:        * AVRational itime = ictx->streams[pkt.stream_index]->time_base;
+        -:  135:        * AVRational otime = octx->streams[pkt.stream_index]->time_base;
+        -:  136:        * pkt.pts = av_rescale_q_rnd(pkt.pts, itime, otime, (AVRounding)(AV_ROUND_NEAR_INF | AV_ROUND_NEAR_INF));
+        -:  137:        * pkt.dts = av_rescale_q_rnd(pkt.pts, itime, otime, (AVRounding)(AV_ROUND_NEAR_INF | AV_ROUND_NEAR_INF));
+        -:  138:        * pkt.duration = av_rescale_q_rnd(pkt.duration, itime, otime, (AVRounding)(AV_ROUND_NEAR_INF | AV_ROUND_NEAR_INF));
+        -:  139:        * pkt.pos = -1;
+        -:  140:        
+        -:  141:
+        -:  142:
+        -:  143:        //视频帧推送速度
+        -:  144:        if (ictx->streams[pkt.stream_index]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO)
+        -:  145:        {
+        -:  146:            AVRational tb = ictx->streams[pkt.stream_index]->time_base;
+        -:  147:            //已经过去的时间
+        -:  148:            long long now = av_gettime() - startTime;
+        -:  149:            long long dts = 0;
+        -:  150:            dts = pkt.dts * (1000 * 1000 * r2d(tb));
+        -:  151:            if (dts > now)
+        -:  152:                // av_usleep((dts - now));
+        -:  153:                av_usleep(40000);
+        -:  154:        }
+        -:  155:        */
+    #####:  156:       AVRational time_base1=ictx->streams[0]->time_base;
+        -:  157:        //Duration between 2 frames (us)
+    #####:  158:        int64_t calc_duration=(double)AV_TIME_BASE/av_q2d(ictx->streams[0]->r_frame_rate);
+    %%%%%:  158-block  0
+call    0 never executed
+        -:  159:        //Parameters
+    #####:  160:        pkt.pts=(double)(frame_index*calc_duration)/(double)(av_q2d(time_base1)*AV_TIME_BASE);
+call    0 never executed
+    #####:  161:        pkt.dts=pkt.pts;
+    #####:  162:        pkt.duration=(double)calc_duration/(double)(av_q2d(time_base1)*AV_TIME_BASE);
+call    0 never executed
+        -:  163:
+    #####:  164:        AVRational time_base=ictx->streams[0]->time_base;
+    #####:  165:        AVRational time_base_q={1,AV_TIME_BASE};
+    #####:  166:        int64_t pts_time = av_rescale_q(pkt.dts, time_base, time_base_q);
+branch  0 never executed
+branch  1 never executed
+    #####:  167:        int64_t now_time = av_gettime() - startTime;
+    %%%%%:  167-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  168:        if (pts_time > now_time)
+    %%%%%:  168-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  169:            av_usleep(pts_time - now_time);
+    %%%%%:  169-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  170:        AVRational itime = ictx->streams[pkt.stream_index]->time_base;
+    #####:  171:        AVRational otime = octx->streams[pkt.stream_index]->time_base;
+        -:  172:		/* copy packet */
+        -:  173:		//转换PTS/DTS（Convert PTS/DTS）
+    #####:  174:		pkt.pts = av_rescale_q_rnd(pkt.pts, itime, otime, (AVRounding)(AV_ROUND_NEAR_INF|AV_ROUND_PASS_MINMAX));
+    %%%%%:  174-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  175:		pkt.dts = av_rescale_q_rnd(pkt.dts, itime, otime, (AVRounding)(AV_ROUND_NEAR_INF|AV_ROUND_PASS_MINMAX));
+    %%%%%:  175-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  176:		pkt.duration = av_rescale_q(pkt.duration, itime, otime);
+    %%%%%:  176-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  177:		pkt.pos = -1;
+        -:  178:		//Print to Screen
+    #####:  179:		if(pkt.stream_index==0){
+    %%%%%:  179-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  180:			printf("Send %8d video frames to output URL\n",frame_index);
+    %%%%%:  180-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  181:			frame_index++;
+    %%%%%:  181-block  0
+        -:  182:		}
+        -:  183:
+    #####:  184:        re = av_interleaved_write_frame(octx, &pkt);
+    %%%%%:  184-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  185://        if (re < 0)
+        -:  186://        {
+        -:  187://            return XError(re);
+        -:  188://        }
+    #####:  189:    }
+    %%%%%:  189-block  0
+        -:  190:
+    #####:  191:    cout << "file to rtmp test" << endl;
+    %%%%%:  191-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  191-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  192:    getchar();
+    %%%%%:  192-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  193:    return 0;
+    %%%%%:  193-block  0
+        -:  194:}

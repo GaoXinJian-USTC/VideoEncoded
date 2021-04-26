@@ -1,0 +1,227 @@
+        -:    0:Source:D:/ffmpeg-4.3.2-2021-02-27-full_build-shared/ffmpeg-4.3.2-2021-02-27-full_build-shared/include/libavutil/rational.h
+        -:    0:Graph:D:\projects\audio_encode\cmake-build-debug-coverage\CMakeFiles\wav_encode.dir\tuiliu_update.cpp.gcno
+        -:    0:Data:D:\projects\audio_encode\cmake-build-debug-coverage\CMakeFiles\wav_encode.dir\tuiliu_update.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*
+        -:    2: * rational numbers
+        -:    3: * Copyright (c) 2003 Michael Niedermayer <michaelni@gmx.at>
+        -:    4: *
+        -:    5: * This file is part of FFmpeg.
+        -:    6: *
+        -:    7: * FFmpeg is free software; you can redistribute it and/or
+        -:    8: * modify it under the terms of the GNU Lesser General Public
+        -:    9: * License as published by the Free Software Foundation; either
+        -:   10: * version 2.1 of the License, or (at your option) any later version.
+        -:   11: *
+        -:   12: * FFmpeg is distributed in the hope that it will be useful,
+        -:   13: * but WITHOUT ANY WARRANTY; without even the implied warranty of
+        -:   14: * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+        -:   15: * Lesser General Public License for more details.
+        -:   16: *
+        -:   17: * You should have received a copy of the GNU Lesser General Public
+        -:   18: * License along with FFmpeg; if not, write to the Free Software
+        -:   19: * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+        -:   20: */
+        -:   21:
+        -:   22:/**
+        -:   23: * @file
+        -:   24: * @ingroup lavu_math_rational
+        -:   25: * Utilties for rational number calculation.
+        -:   26: * @author Michael Niedermayer <michaelni@gmx.at>
+        -:   27: */
+        -:   28:
+        -:   29:#ifndef AVUTIL_RATIONAL_H
+        -:   30:#define AVUTIL_RATIONAL_H
+        -:   31:
+        -:   32:#include <stdint.h>
+        -:   33:#include <limits.h>
+        -:   34:#include "attributes.h"
+        -:   35:
+        -:   36:/**
+        -:   37: * @defgroup lavu_math_rational AVRational
+        -:   38: * @ingroup lavu_math
+        -:   39: * Rational number calculation.
+        -:   40: *
+        -:   41: * While rational numbers can be expressed as floating-point numbers, the
+        -:   42: * conversion process is a lossy one, so are floating-point operations. On the
+        -:   43: * other hand, the nature of FFmpeg demands highly accurate calculation of
+        -:   44: * timestamps. This set of rational number utilities serves as a generic
+        -:   45: * interface for manipulating rational numbers as pairs of numerators and
+        -:   46: * denominators.
+        -:   47: *
+        -:   48: * Many of the functions that operate on AVRational's have the suffix `_q`, in
+        -:   49: * reference to the mathematical symbol "ℚ" (Q) which denotes the set of all
+        -:   50: * rational numbers.
+        -:   51: *
+        -:   52: * @{
+        -:   53: */
+        -:   54:
+        -:   55:/**
+        -:   56: * Rational number (pair of numerator and denominator).
+        -:   57: */
+        -:   58:typedef struct AVRational{
+        -:   59:    int num; ///< Numerator
+        -:   60:    int den; ///< Denominator
+        -:   61:} AVRational;
+        -:   62:
+        -:   63:/**
+        -:   64: * Create an AVRational.
+        -:   65: *
+        -:   66: * Useful for compilers that do not support compound literals.
+        -:   67: *
+        -:   68: * @note The return value is not reduced.
+        -:   69: * @see av_reduce()
+        -:   70: */
+        -:   71:static inline AVRational av_make_q(int num, int den)
+        -:   72:{
+        -:   73:    AVRational r = { num, den };
+        -:   74:    return r;
+        -:   75:}
+        -:   76:
+        -:   77:/**
+        -:   78: * Compare two rationals.
+        -:   79: *
+        -:   80: * @param a First rational
+        -:   81: * @param b Second rational
+        -:   82: *
+        -:   83: * @return One of the following values:
+        -:   84: *         - 0 if `a == b`
+        -:   85: *         - 1 if `a > b`
+        -:   86: *         - -1 if `a < b`
+        -:   87: *         - `INT_MIN` if one of the values is of the form `0 / 0`
+        -:   88: */
+        -:   89:static inline int av_cmp_q(AVRational a, AVRational b){
+        -:   90:    const int64_t tmp= a.num * (int64_t)b.den - b.num * (int64_t)a.den;
+        -:   91:
+        -:   92:    if(tmp) return (int)((tmp ^ a.den ^ b.den)>>63)|1;
+        -:   93:    else if(b.den && a.den) return 0;
+        -:   94:    else if(a.num && b.num) return (a.num>>31) - (b.num>>31);
+        -:   95:    else                    return INT_MIN;
+        -:   96:}
+        -:   97:
+        -:   98:/**
+        -:   99: * Convert an AVRational to a `double`.
+        -:  100: * @param a AVRational to convert
+        -:  101: * @return `a` in floating-point form
+        -:  102: * @see av_d2q()
+        -:  103: */
+function av_q2d called 0 returned 0% blocks executed 0%
+    #####:  104:static inline double av_q2d(AVRational a){
+    #####:  105:    return a.num / (double) a.den;
+    %%%%%:  105-block  0
+        -:  106:}
+        -:  107:
+        -:  108:/**
+        -:  109: * Reduce a fraction.
+        -:  110: *
+        -:  111: * This is useful for framerate calculations.
+        -:  112: *
+        -:  113: * @param[out] dst_num Destination numerator
+        -:  114: * @param[out] dst_den Destination denominator
+        -:  115: * @param[in]      num Source numerator
+        -:  116: * @param[in]      den Source denominator
+        -:  117: * @param[in]      max Maximum allowed values for `dst_num` & `dst_den`
+        -:  118: * @return 1 if the operation is exact, 0 otherwise
+        -:  119: */
+        -:  120:int av_reduce(int *dst_num, int *dst_den, int64_t num, int64_t den, int64_t max);
+        -:  121:
+        -:  122:/**
+        -:  123: * Multiply two rationals.
+        -:  124: * @param b First rational
+        -:  125: * @param c Second rational
+        -:  126: * @return b*c
+        -:  127: */
+        -:  128:AVRational av_mul_q(AVRational b, AVRational c) av_const;
+        -:  129:
+        -:  130:/**
+        -:  131: * Divide one rational by another.
+        -:  132: * @param b First rational
+        -:  133: * @param c Second rational
+        -:  134: * @return b/c
+        -:  135: */
+        -:  136:AVRational av_div_q(AVRational b, AVRational c) av_const;
+        -:  137:
+        -:  138:/**
+        -:  139: * Add two rationals.
+        -:  140: * @param b First rational
+        -:  141: * @param c Second rational
+        -:  142: * @return b+c
+        -:  143: */
+        -:  144:AVRational av_add_q(AVRational b, AVRational c) av_const;
+        -:  145:
+        -:  146:/**
+        -:  147: * Subtract one rational from another.
+        -:  148: * @param b First rational
+        -:  149: * @param c Second rational
+        -:  150: * @return b-c
+        -:  151: */
+        -:  152:AVRational av_sub_q(AVRational b, AVRational c) av_const;
+        -:  153:
+        -:  154:/**
+        -:  155: * Invert a rational.
+        -:  156: * @param q value
+        -:  157: * @return 1 / q
+        -:  158: */
+        -:  159:static av_always_inline AVRational av_inv_q(AVRational q)
+        -:  160:{
+        -:  161:    AVRational r = { q.den, q.num };
+        -:  162:    return r;
+        -:  163:}
+        -:  164:
+        -:  165:/**
+        -:  166: * Convert a double precision floating point number to a rational.
+        -:  167: *
+        -:  168: * In case of infinity, the returned value is expressed as `{1, 0}` or
+        -:  169: * `{-1, 0}` depending on the sign.
+        -:  170: *
+        -:  171: * @param d   `double` to convert
+        -:  172: * @param max Maximum allowed numerator and denominator
+        -:  173: * @return `d` in AVRational form
+        -:  174: * @see av_q2d()
+        -:  175: */
+        -:  176:AVRational av_d2q(double d, int max) av_const;
+        -:  177:
+        -:  178:/**
+        -:  179: * Find which of the two rationals is closer to another rational.
+        -:  180: *
+        -:  181: * @param q     Rational to be compared against
+        -:  182: * @param q1,q2 Rationals to be tested
+        -:  183: * @return One of the following values:
+        -:  184: *         - 1 if `q1` is nearer to `q` than `q2`
+        -:  185: *         - -1 if `q2` is nearer to `q` than `q1`
+        -:  186: *         - 0 if they have the same distance
+        -:  187: */
+        -:  188:int av_nearer_q(AVRational q, AVRational q1, AVRational q2);
+        -:  189:
+        -:  190:/**
+        -:  191: * Find the value in a list of rationals nearest a given reference rational.
+        -:  192: *
+        -:  193: * @param q      Reference rational
+        -:  194: * @param q_list Array of rationals terminated by `{0, 0}`
+        -:  195: * @return Index of the nearest value found in the array
+        -:  196: */
+        -:  197:int av_find_nearest_q_idx(AVRational q, const AVRational* q_list);
+        -:  198:
+        -:  199:/**
+        -:  200: * Convert an AVRational to a IEEE 32-bit `float` expressed in fixed-point
+        -:  201: * format.
+        -:  202: *
+        -:  203: * @param q Rational to be converted
+        -:  204: * @return Equivalent floating-point value, expressed as an unsigned 32-bit
+        -:  205: *         integer.
+        -:  206: * @note The returned value is platform-indepedant.
+        -:  207: */
+        -:  208:uint32_t av_q2intfloat(AVRational q);
+        -:  209:
+        -:  210:/**
+        -:  211: * Return the best rational so that a and b are multiple of it.
+        -:  212: * If the resulting denominator is larger than max_den, return def.
+        -:  213: */
+        -:  214:AVRational av_gcd_q(AVRational a, AVRational b, int max_den, AVRational def);
+        -:  215:
+        -:  216:/**
+        -:  217: * @}
+        -:  218: */
+        -:  219:
+        -:  220:#endif /* AVUTIL_RATIONAL_H */

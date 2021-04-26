@@ -1,0 +1,3 @@
+D:/projects/audio_encode/cmake-build-debug/CMakeFiles/h265rtsp.dir
+D:/projects/audio_encode/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/projects/audio_encode/cmake-build-debug/CMakeFiles/rebuild_cache.dir
